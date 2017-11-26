@@ -192,12 +192,20 @@ bool ParseArgs(int argc, char* argv[]){
                     cout << "Parameter 3 should be an integer"<< endl;
                     return false;
                 }
+                if(atoi(argv[3]) < 0){
+                	cout << "Parameter 3 should be greater than 0" << endl;
+                	return false;
+                }
                 topNGrams = atoi(argv[3]);
             }
             if(argc > 2){
                 if(!TestInt(argv[2])){
                     cout << "Parameter 2 should be an integer" << endl;
                     return false;
+                }
+                if(atoi(argv[2]) < 0){
+                	cout << "Parameter 2 should be greater than 0" << endl;
+                	return false;
                 }
                 ngramSize = atoi(argv[2]);
             }
