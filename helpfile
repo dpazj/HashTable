@@ -1,0 +1,16 @@
+Helpfile
+ngram tool
+USAGE: ./ngram [filename] [item number] [top ngrams] [keyword]
+
+filename:
+	Name of the file you wish to analyse.
+
+item number:
+	number of items that form an n-gram. Default is 3.
+
+top ngrams:
+	number of top most frequent n-grams to output, default is 10.
+
+keyword:
+	One of the keywords: word, char, decimal indicating whether the n-gram items are words, 
+	characters, or decimal digits.
