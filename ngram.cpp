@@ -22,7 +22,7 @@ string keyword = "char";
 unsigned ngramSize = 3;
 unsigned topNGrams = 10;
 
-int numberitems = 0;
+unsigned numberitems = 0;
 
 vector<string> wordNGram;
 
@@ -31,13 +31,16 @@ using namespace std;
 
 void DisplayScoreBoard(){
     float frequency;
-    for(unsigned i=0;i<scoreboard.size();i++){
+    unsigned a = scoreboard.size();
+    if(scoreboard.size() > OT.items()){
+        a = OT.items();
+    }
+
+    for(unsigned i=0;i<a;i++){
         frequency = (scoreboard.at(i).occurence / (float) numberitems) *100;
         frequency = roundf(frequency * 100) / 100;
         cout << scoreboard.at(i).token << ":" << frequency << endl;
     }
-
-
 }
 
 int SearchSB(string token){
@@ -133,21 +136,28 @@ void ProcessWord(string line){
 
 bool ProcessFile(){
     string line;
+    string chars;
+
     ifstream file(filename.c_str());
     if(file.is_open()){
         while(getline(file,line)){
             if(keyword == "char"){
-                ProcessChars(line);
+                chars += line;
             }else if(keyword == "word"){
                 ProcessWord(line);
             }else if(keyword == "decimal"){
-                cout << "Was unable to understand what was being asked here :)" << endl;
+                cout << "Not sure what is required for decmial digits here :/" << endl;
+                return false;
             }
         }
         file.close();
     }else{
         cout << "Unable to open '" << filename << "', make sure it exist." << endl;
         return false;
+    }
+
+    if(keyword == "char"){
+        ProcessChars(chars);
     }
     if(keyword == "word"){
         AddWords();

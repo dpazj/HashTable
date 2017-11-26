@@ -6,6 +6,5 @@ ngram: ${FILES}
 	${CC} -o ngram ${CFLAGS} ${FILES}
 run:
 	./ngram
-
 clean:
 	rm -f ngram

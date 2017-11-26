@@ -27,11 +27,22 @@ public:
 
   void insert(KeyType,ValueType); // insert data associated with key into table
   void erase(KeyType);            // remove key and associated data from table
+  bool replaceValue(KeyType, ValueType);
 
   void rehash(size_t); // sets a new size for the hash table, rehashes the hash table
   size_t findNextPrime(size_t currsize);
+  void display();
   // extend if necessary
 };
+
+template <class KeyType, class ValueType>
+void HashTable<KeyType,ValueType>::display() {
+  for(size_t i=0;i<this->size();i++){
+      if(table->at(i).inUse()){
+          cout << i << " "<<table->at(i).getKey() << " " << table->at(i).getValue() << endl;
+      }
+  }
+}
 
 template <class KeyType, class ValueType>
 size_t HashTable<KeyType,ValueType>::size() {
@@ -110,8 +121,6 @@ ValueType HashTable<KeyType,ValueType>::getValue(KeyType key){
     size_t index = hash_function(key);
     if(!table->at(index).inUse()){
         if(!table->at(index).isDeleted()){
-            cout << "get val" << endl;
-            cout << key << " " << index << endl;
             throw KEY_NOT_FOUND;
         }else{
             while(key != table->at(index).getKey()){
@@ -132,10 +141,32 @@ ValueType HashTable<KeyType,ValueType>::getValue(KeyType key){
     return table->at(index).getValue();
 }
 
+
+template <class KeyType, class ValueType>
+bool HashTable<KeyType,ValueType>::replaceValue(KeyType key, ValueType value){
+    size_t index = hash_function(key);
+    if(table->at(index).inUse()){
+        while(table->at(index).inUse()){
+            if(table->at(index).getKey() == key){
+                table->at(index).assign(key,value);
+                return true;
+            }
+            index++;
+            if(index == this->size()){
+                index = 0;
+            }
+
+        }
+    }
+
+    return false;
+}
+
+
+
 template <class KeyType, class ValueType>
 void HashTable<KeyType,ValueType>::insert(KeyType key, ValueType value){
     size_t index = hash_function(key);
-
     if(table->at(index).inUse()){
         while(table->at(index).inUse()){
             if(table->at(index).getKey() == key){
