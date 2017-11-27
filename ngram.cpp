@@ -39,7 +39,7 @@ void DisplayScoreBoard(){
     for(unsigned i=0;i<a;i++){
         frequency = (scoreboard.at(i).occurence / (float) numberitems) *100;
         frequency = roundf(frequency * 100) / 100;
-        cout << scoreboard.at(i).token << ":" << frequency << endl;
+        cout << i+1 <<". ngram: " << scoreboard.at(i).token << "\tFrequency:" << frequency << "\tOccurence:" << scoreboard.at(i).occurence <<endl;
     }
 }
 
@@ -88,7 +88,7 @@ void ProcessChars(string line){
     int occurence;
     if(line.length() < ngramSize){return;}
 
-    for(unsigned i=0;i<line.length()-(ngramSize +1); i++){
+    for(unsigned i=0;i<line.length()-(ngramSize - 1); i++){
         token = line.substr(i, ngramSize);
         try{
             OT.insert(token,1);
@@ -107,7 +107,7 @@ void AddWords(){
     string token;
     if(wordNGram.size() < ngramSize){return;}
 
-    for(unsigned i=0;i< wordNGram.size()-(ngramSize + 1);i++){
+    for(unsigned i=0;i< wordNGram.size()-(ngramSize - 1);i++){
         token.erase();
         for(unsigned j=i;j<ngramSize+i;j++){
             token += wordNGram.at(j);
